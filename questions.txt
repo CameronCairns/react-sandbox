@@ -1,0 +1,3 @@
+- Is it best practice to redefine keys in props to local variables?
+   e.g. const propVar = props.propVar
+  Cause I've seen this used in the react tutorial, I'll probably destructure ultimately, but I am curious about this
