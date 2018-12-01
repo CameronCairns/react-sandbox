@@ -1,25 +1,73 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-class App extends Component {
+class Clock extends React.Component<{}, { date: Date }> {
+  timerID: IntervalID;
+
+  constructor(props: Object) {
+    super(props);
+    this.state = { date: new Date() };
+  }
+
+  componentDidMount() {
+    console.log("Mount");
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  componentWillUnmount() {
+    console.log("Unmount");
+    clearInterval(this.timerID);
+  }
+
+  render() {
+    return <div>It is {this.state.date.toLocaleTimeString()}.</div>;
+  }
+}
+
+class App extends React.Component<{}, { showTime: boolean }> {
+  timeOutID: TimeoutID;
+
+  constructor(props: Object) {
+    super(props);
+    this.state = { showTime: true };
+  }
+
+  componentDidMount() {
+    this.timeOutID = setTimeout(
+      () => this.setState({ showTime: false }),
+      10000
+    );
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeOutID);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Hello World!</h1>
+        <h2>{this.state.showTime && <Clock />}</h2>
+        <h2>{this.state.showTime && <Clock />}</h2>
+        <h2>
+          <Clock />
+        </h2>
+        <h2>
+          <Clock />
+        </h2>
+        <h2>
+          <Clock />
+        </h2>
+        <h2>
+          <Clock />
+        </h2>
       </div>
     );
   }
