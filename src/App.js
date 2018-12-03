@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 class Clock extends React.Component<{}, { date: Date }> {
@@ -29,6 +28,30 @@ class Clock extends React.Component<{}, { date: Date }> {
   render() {
     return <div>It is {this.state.date.toLocaleTimeString()}.</div>;
   }
+}
+
+function RedListItem({ value }) {
+  return <li style={{ color: "red" }}>{value}</li>;
+}
+
+function TestNumberList({ numbers }) {
+  const listItems = numbers.map(number => (
+    // Note that the key is defined here, keys must be defined
+    // in jsx that is directly nested within the ul/ol
+    <RedListItem value={number} key={number.toString()} />
+  ));
+  return <ul>{listItems}</ul>;
+}
+
+function NumberList({ rangeStart, rangeStop }) {
+  let numbers = [];
+  for (var i = rangeStart; i < rangeStop; i++) {
+    numbers.push(i);
+  }
+  const listItems = numbers.map(number => (
+    <li key={number.toString()}>{number}</li>
+  ));
+  return <ul>{listItems}</ul>;
 }
 
 class App extends React.Component<{}, { showTime: boolean }> {
@@ -68,6 +91,8 @@ class App extends React.Component<{}, { showTime: boolean }> {
         <h2>
           <Clock />
         </h2>
+        <TestNumberList numbers={[1, 2, 3, 4, 5]} />
+        <NumberList rangeStart={0} rangeStop={100} />
       </div>
     );
   }
