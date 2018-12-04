@@ -54,6 +54,39 @@ function NumberList({ rangeStart, rangeStop }) {
   return <ul>{listItems}</ul>;
 }
 
+function TestForms() {
+  const inputTypes = [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "email",
+    "file",
+    "hidden",
+    "image",
+    "month",
+    "number",
+    "password",
+    "radio",
+    "range",
+    "reset",
+    "search",
+    "submit",
+    "tel",
+    "text",
+    "time",
+    "url",
+    "week"
+  ];
+  const inputs = inputTypes.map(inputType => (
+    <div>
+      <input type={inputType} />
+    </div>
+  ));
+  return <form>{inputs}</form>;
+}
+
 class App extends React.Component<{}, { showTime: boolean }> {
   timeOutID: TimeoutID;
 
@@ -93,6 +126,7 @@ class App extends React.Component<{}, { showTime: boolean }> {
         </h2>
         <TestNumberList numbers={[1, 2, 3, 4, 5]} />
         <NumberList rangeStart={0} rangeStop={100} />
+        <TestForms />
       </div>
     );
   }
