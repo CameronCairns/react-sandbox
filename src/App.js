@@ -222,6 +222,27 @@ class TestMultiSelector extends React.Component<{}, { value: [] }> {
   }
 }
 
+class FileInput extends React.Component<{}, {}> {
+  fileInput = React.createRef();
+
+  handleSubmit = event => {
+    event.preventDefault();
+    alert(`Selected file - ${this.fileInput.current.files[0].name}`);
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Upload File:
+          <input type="file" ref={this.fileInput} />{" "}
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
+}
+
 class App extends React.Component<{}, { showTime: boolean }> {
   timeOutID: TimeoutID;
 
@@ -266,6 +287,7 @@ class App extends React.Component<{}, { showTime: boolean }> {
         <CustomTextArea />
         <IceCreamSelector />
         <TestMultiSelector />
+        <FileInput />
       </div>
     );
   }
