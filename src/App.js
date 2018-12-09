@@ -243,6 +243,63 @@ class FileInput extends React.Component<{}, {}> {
   }
 }
 
+function reverseString(s) {
+  return s
+    .split("")
+    .reverse()
+    .join("");
+}
+
+class BasicDisplay extends React.Component<
+  { sentence: string, reverse: boolean, updateSentence: object => void },
+  {}
+> {
+  handleChange = event => {
+    const value = event.target.value;
+    const sentence = this.props.reverse ? reverseString(value) : value;
+    this.props.updateSentence(sentence);
+  };
+
+  render() {
+    const displayedSentence = this.props.reverse
+      ? reverseString(this.props.sentence)
+      : this.props.sentence;
+    return (
+      <label>
+        {this.props.reverse ? "Reverse sentence" : "Forward sentence"}
+        <input
+          type="text"
+          value={displayedSentence}
+          onChange={this.handleChange}
+        />
+      </label>
+    );
+  }
+}
+
+class TestLiftingState extends React.Component<{}, { sentence: string }> {
+  state = { sentence: "This text will display in reverse" };
+
+  updateSentence = value => this.setState({ sentence: value });
+
+  render() {
+    return (
+      <div>
+        <BasicDisplay
+          sentence={this.state.sentence}
+          reverse={false}
+          updateSentence={this.updateSentence}
+        />
+        <BasicDisplay
+          sentence={this.state.sentence}
+          reverse={true}
+          updateSentence={this.updateSentence}
+        />
+      </div>
+    );
+  }
+}
+
 class App extends React.Component<{}, { showTime: boolean }> {
   timeOutID: TimeoutID;
 
@@ -288,6 +345,7 @@ class App extends React.Component<{}, { showTime: boolean }> {
         <IceCreamSelector />
         <TestMultiSelector />
         <FileInput />
+        <TestLiftingState />
       </div>
     );
   }
